@@ -1,9 +1,9 @@
 #unsplash配置
 unsplash:
-  
+
 
 #下载
-interval: 10 #更换间隔，单位秒
+interval: 3600 #更换间隔，单位秒
 
 #代理支持socks5，http
 proxy:
