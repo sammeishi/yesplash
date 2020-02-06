@@ -20,7 +20,8 @@
       "target": [
         "nsis",
         "zip"
-      ]
+      ],
+      "icon": "icon.ico"
     },
     "extraResources": {
       "from": "./config.yml",
