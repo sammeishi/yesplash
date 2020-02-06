@@ -65,7 +65,7 @@ function listenUIEvent(){
     //退出
     ipcMain.on('exit',()=>{
         win.destroy();
-        process.exit();
+        app.quit();
     } );
 }
 
@@ -93,6 +93,7 @@ function createWindow() {
     win = new BrowserWindow({
         width: 800,
         height: 600,
+        show: !(/--hide/.test( process.argv[2] )),
         useContentSize: true,
         titleBarStyle: 'hidden',
         frame: false,

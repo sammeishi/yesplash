@@ -115,11 +115,11 @@ function round( opt ){
             nextRound();
         })
 }
-//10秒后下一轮
+//60秒后下一轮
 function nextRound(){
     console.log('waite 10s,next round!');
     eventCenter.emit('log','nextRound' );
-    roundTimer = setTimeout(round,1000 * 2);
+    roundTimer = setTimeout(round,1000 * 60);
 }
 
 /**
