@@ -93,7 +93,7 @@ function createWindow() {
     win = new BrowserWindow({
         width: 800,
         height: 600,
-        show: !(/--hide/.test( process.argv[2] )),
+        show: !(/--hide/.test( process.argv.join(".") )),
         useContentSize: true,
         titleBarStyle: 'hidden',
         frame: false,
