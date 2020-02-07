@@ -2,6 +2,8 @@
 yes !! i can use unsplash wallpaper.  
 使用unsplash 换壁纸应用，增加了通过代理下载unsplash 照片。
 
+![preview](https://raw.githubusercontent.com/sammeishi/yesplash/master/preview.jpg)
+
 #### 如何使用
 编辑 config.yml，配置你的unsplash开发者密钥即可
 已经内置一个网上搜来的密钥
