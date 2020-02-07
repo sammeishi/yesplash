@@ -1,6 +1,8 @@
 # yesplash
-yes !! i can use unsplash wallpaper.  
-使用unsplash 换壁纸应用，增加了通过代理下载unsplash 照片。
+yes !!  unsplash available  !  
+定时更换随机壁纸应用。
+使用unsplash源，由于unsplash无法访问，特增加了通过代理下载unsplash 照片。
+支持 http，socks5
 
 ![preview](https://raw.githubusercontent.com/sammeishi/yesplash/master/preview.jpg)
 
@@ -14,7 +16,7 @@ yes !! i can use unsplash wallpaper.
 #### config.yml配置项说明
 1. proxy项为代理，如果不需要可删除此项。
 2. unsplash. AccessKey 为访问密钥
-3. interval 更换壁纸间隔
+3. interval 定时更换间隔，单位秒
 
 #### TODO
 1. 开机启动
