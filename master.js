@@ -144,7 +144,7 @@ module.exports = {
         let that = this;
         return new Promise(()=>{
             abort();
-            util.finishTime(true)
+            util.latestInfo({ changeTime: 0 })
                 .then(()=>{
                     that.start( { immediately: true } );
                 })

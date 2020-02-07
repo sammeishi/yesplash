@@ -1,5 +1,6 @@
 const { app, BrowserWindow,Menu,ipcMain,Tray,nativeImage } = require('electron');
 const master = require('./master');
+const _ = require('lodash');
 const path = require('path');
 const fse = require('fs-extra');
 const util = require('./lib/util');
@@ -40,6 +41,8 @@ function onWinLoad(){
     send2win('log', "free");
     //启动
     master.start();
+    //第一次启动，显示最新的照片
+    showLatestPhoto();
 }
 
 /**
@@ -107,6 +110,19 @@ function createWindow() {
 }
 
 /**
- * 创建窗口
+ * 读取上次图片，显示出来.
+ */
+function showLatestPhoto(){
+    util.latestInfo()
+        .then(( info )=>{
+            if( _.has(info,"photoFile") ){
+                send2win('change', info.photoFile);
+            }
+        })
+        .catch((()=>{}))
+}
+
+/**
+ * app准备好后初始化
  */
 app.whenReady().then(init);
