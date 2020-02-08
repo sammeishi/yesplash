@@ -8,17 +8,25 @@ let win = null;
 let send2win = (e,d)=> win.webContents.send(e, d);
 let tray = null;
 /**
+ * 主进程logger
+ */
+let logger = util.createLogger('master');
+
+/**
  * 初始化
  */
 function init(){
     //确保下载目录存在
     try{
         fse.ensureDirSync( util.downloadPath() );
+        fse.ensureDirSync( util.logPath() );
     }
     catch (e) {
-        console.log( "mkdir error:",e );
+        logger.error( "init mkdir error: ", e );
         process.exit();
     }
+    //master给予主logger
+    master.setLogger( logger );
     //创建窗口
     createWindow();
     //创建托盘图标
@@ -54,7 +62,7 @@ function listenUIEvent(){
      */
     ipcMain.on('next', () => {
         master.next().catch(( e )=>{
-            console.log( e );
+            logger.error( e );
         })
     });
     /**
@@ -119,7 +127,7 @@ function showLatestPhoto(){
                 send2win('change', info.photoFile);
             }
         })
-        .catch((()=>{}))
+        .catch( e => logger.error( e ));
 }
 
 /**

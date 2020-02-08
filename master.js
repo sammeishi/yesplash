@@ -11,7 +11,7 @@ let currFlow = null; //当前处理流进程
 const events = require('events');
 let eventCenter = new events.EventEmitter();
 let doImmediately = false;
-
+let logger = null;
 /*
 * 创建一个处理流进程
 * 并立即启动
@@ -57,7 +57,7 @@ function abort(){
 function listenFlow( data ){
     //flow完成
     if( data.status === "done" ){
-        console.log('done!!');
+        logger.debug('done!!');
         currFlow = null;
         //事件通知更换壁纸事件
         eventCenter.emit('change',data);
@@ -70,7 +70,7 @@ function listenFlow( data ){
     //flow失败
     if( data.status === "error" ){
         currFlow = null;
-        console.log('flow error:',data.msg);
+        logger.error(`flow error: ${ data.msg ||  "??"}`);
         nextRound();
     }
 }
@@ -81,7 +81,7 @@ function listenFlow( data ){
 let roundTimer = null;
 let flowTimer= null;
 function round( opt ){
-    console.log('=======================');
+    logger.debug('=======================');
     eventCenter.emit('log','running');
     let conf = null;
     opt = opt ||{};
@@ -100,7 +100,7 @@ function round( opt ){
         })
         //开启定时器,启动流进程处理,流处理完毕会汇报
         .then(( t )=>{
-            console.log('wait time:',t+"s","start flow.");
+            logger.debug(`wait ${t}s start flow!`);
             eventCenter.emit('log','wait to ' + moment( (Date.now()) + t * 1000 ).format("HH:mm:ss") );
             flowTimer = setTimeout(()=>{
                 eventCenter.emit('log','running' );
@@ -111,15 +111,16 @@ function round( opt ){
         })
         //出错，继续下一轮
         .catch(( e )=>{
-            console.log('error! ',e);
+            logger.error(e);
             nextRound();
         })
 }
-//60秒后下一轮
+//x秒后下一轮
 function nextRound(){
-    console.log('waite 10s,next round!');
+    let roundInterval = 10 * 1000;
+    logger.debug('next round after '+ ( Math.floor(roundInterval/1000) ) +'s');
     eventCenter.emit('log','nextRound' );
-    roundTimer = setTimeout(round,1000 * 60);
+    roundTimer = setTimeout(round,roundInterval);
 }
 
 /**
@@ -149,8 +150,10 @@ module.exports = {
                     that.start( { immediately: true } );
                 })
                 .catch((e)=>{
-                    console.log( e.toString() );
+                    console.log( "next function error:", e.toString() );
                 });
         })
     },
+    //set logger
+    setLogger: l => logger = l
 };
